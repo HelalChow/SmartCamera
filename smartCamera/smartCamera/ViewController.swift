@@ -72,6 +72,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
 //    }
 //
     
+
+    
     
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
@@ -82,11 +84,13 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         let request = VNCoreMLRequest(model: model)
         { (finishedReq, err) in
             
+            print(finishedReq.results)
             guard let results = finishedReq.results as? [VNClassificationObservation] else {return}
             
             guard let firstObservation = results.first else {return}
             
-            print(firstObservation.identifier)
+            print(firstObservation.identifier, firstObservation.confidence)
+            
             
 //            DispatchQueue.main.async {
 //                print(firstObservation.identifier)
