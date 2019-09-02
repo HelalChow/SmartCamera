@@ -11,18 +11,18 @@ import AVKit
 import Vision
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
-    
-    var lst:[String] = []
-    var foods:[String] = ["icecream", "banana", "pizza, pizza pie", "orange", "burger", "cheeseburger", "hotdog", "broccoli", "pineapple", "meatloaf", "meat cleaver"]
-    
-    let identifierLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+//
+//    var lst:[String] = []
+//    var foods:[String] = ["icecream", "banana", "pizza, pizza pie", "orange", "burger", "cheeseburger", "hotdog", "broccoli", "pineapple", "meatloaf", "meat cleaver"]
+//
+//    let identifierLabel: UILabel = {
+//        let label = UILabel()
+//        label.backgroundColor = .white
+//        label.textAlignment = .center
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
+//
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,30 +47,30 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
         captureSession.addOutput(dataOutput)
         
-        setupIdentifierConfidenceLabel()
-        
-        let button = UIButton(frame: CGRect(x: 130, y: 670, width: 150, height: 40))
-        button.backgroundColor = .green
-        button.setTitle("Finish", for: .normal)
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        
-        self.view.addSubview(button)
+//        setupIdentifierConfidenceLabel()
+//
+//        let button = UIButton(frame: CGRect(x: 130, y: 670, width: 150, height: 40))
+//        button.backgroundColor = .green
+//        button.setTitle("Finish", for: .normal)
+//        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+//
+//        self.view.addSubview(button)
         
     }
-    
-    @objc func buttonAction(){
-        self.performSegue(withIdentifier: "foodVC", sender: self)
-        print("HEYYYYYYYYY")
-    }
-    
-    fileprivate func setupIdentifierConfidenceLabel() {
-        view.addSubview(identifierLabel)
-        identifierLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
-        identifierLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        identifierLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        identifierLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    }
-    
+//
+//    @objc func buttonAction(){
+//        self.performSegue(withIdentifier: "foodVC", sender: self)
+//        print("HEYYYYYYYYY")
+//    }
+//
+//    fileprivate func setupIdentifierConfidenceLabel() {
+//        view.addSubview(identifierLabel)
+//        identifierLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+//        identifierLabel.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+//        identifierLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+//        identifierLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+//    }
+//
     
     
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
@@ -87,6 +87,20 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             guard let firstObservation = results.first else {return}
             
             print(firstObservation.identifier)
+            
+//            DispatchQueue.main.async {
+//                print(firstObservation.identifier)
+//                print(self.lst)
+//                if self.foods.contains("\(firstObservation.identifier)"){
+//                    if !self.lst.contains("\(firstObservation.identifier)"){
+//                        self.lst.append("\(firstObservation.identifier)")
+//                    }
+//                    self.identifierLabel.text = "\(firstObservation.identifier)"
+//                }
+//                else {
+//                    self.identifierLabel.text = ""
+//                }
+//            }
             
             
         }
