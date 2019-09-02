@@ -14,7 +14,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
         
         // Here is where we start up the camera
@@ -36,25 +35,28 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         dataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
         captureSession.addOutput(dataOutput)
         
-        
-
-//        VNImageRequestHandler(cgImage: CGImage, options: [:]).perform(requests: [VNRequest])
+    
     }
     
     func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-//        print("Camera was able to capture a frame", Date() )
         
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {return}
         
         
-        let model = ///
-        let request = VNCoreMLRequest(model: VNCoreMLModel)
+        guard let model = try? VNCoreMLModel(for: Resnet50().model) else {return}
+        let request = VNCoreMLRequest(model: model)
         { (finishedReq, err) in
             
-            print(finishedReq.results)
+            guard let results = finishedReq.results as? [VNClassificationObservation] else {return}
+            
+            guard let firstObservation = results.first else {return}
+            
+            print(firstObservation.identifier)
+            
+            
         }
        
-        VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [ : ]).perform([request])
+        try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [ : ]).perform([request])
     }
 
 
